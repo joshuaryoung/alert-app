@@ -8,7 +8,7 @@ export const useAlertReducer = () => {
 }
 
 const reducer = (state: any, action: { type: 'add_alert' | 'remove_alert', payload: any }) => {
-    console.log({ state, action })
+    // console.log({ state, action })
     switch (action.type) {
         case 'add_alert': 
             return addAlert(state, action?.payload)

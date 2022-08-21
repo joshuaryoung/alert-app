@@ -6,7 +6,7 @@ function AlertComponent({ alertType, id, alertTitle, timeLimit = 10000, text, li
         <Snackbar open={open} key={id} autoHideDuration={timeLimit} anchorOrigin={{horizontal: 'right', vertical: 'top'}} onClose={el => handleClose(index)}>
             <Alert severity={alertType} >
                 {alertTitle && <AlertTitle>{alertTitle}</AlertTitle>}
-                {link && <Link href={link}>
+                {link && <Link href={link} target="_blank">
                     {text}
                 </Link>}
                 {!link && text}

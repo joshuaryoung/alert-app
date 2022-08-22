@@ -1,5 +1,4 @@
 import React, { useReducer } from "react";
-import AlertComponent from "./AlertComponent"
 
 const initialState: any = []
 
@@ -34,39 +33,19 @@ const removeAlert = (alerts: any, idIn: string) => {
     return [ ...newState ]
 }
 
-export type AlertType = {
-    alertType: 'error' | 'warning' | 'info' | 'success',
-    id?: string,
-    alertTitle?: string,
-    timeLimit?: number,
-    text: string,
+export interface AlertType {
+    alertType: 'error' | 'warning' | 'info' | 'success'
+    id?: string
+    alertTitle?: string
+    timeLimit?: number
+    text: string
     link?: string
 }
 
-function AlertManager({ open, setOpen, alerts }: any) {
-
-    const handleClose = (index: number) => {
-        const newOpen = [...open]
-        newOpen[index] = false
-        setOpen(newOpen)
-    }
+function AlertManager() {
 
     return (
         <div>
-            {alerts && alerts.map((el: any, i: number) => {
-                return (
-                <AlertComponent
-                    key={el.id}
-                    alertType={el.alertType}
-                    alertTitle={el.alertTitle}
-                    text={el.text}
-                    link={el.link}
-                    timeLimit={el.timeLimit}
-                    handleClose={handleClose}
-                    open={open[i]}
-                    index={i}
-                />)
-            })}
         </div>
     )
 }

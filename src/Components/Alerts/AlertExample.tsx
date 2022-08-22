@@ -1,7 +1,11 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material"
+import { Alert, AlertColor, Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material"
+import { useSnackbar } from "notistack"
 import React, { useState } from "react"
+import AlertComponent from "./AlertComponent"
+import './AlertExample.css'
 
-function AlertExample({ dispatch, open, setOpen }: any) {
+function AlertExample({ dispatch }: any) {
+    const { enqueueSnackbar } = useSnackbar()
     const [alertType, setAlertType] = useState<string>('')
     const [alertTitle, setAlertTitle] = useState<string>('')
     const [alertText, setAlertText] = useState<string>('')
@@ -9,17 +13,23 @@ function AlertExample({ dispatch, open, setOpen }: any) {
     const [alertTimeLimit, setAlertTimeLimit] = useState<number>(10000)
 
     const handleAddButtonClick = () => {
-        setOpen([...open, true])
+        enqueueSnackbar(alertText, { content: <AlertComponent alertType={alertType as 'error' | 'warning' | 'info' | 'success'} alertTitle={alertTitle} text={alertText} link={alertLink} />, autoHideDuration: alertTimeLimit, key: crypto.randomUUID() })
         dispatch({ type: 'add_alert', payload: { alertTitle, alertType, text: alertText, link: alertLink, timeLimit: alertTimeLimit }})
     }
     return (
         <div>
             <div id="input-container">
-                <FormControl>
+                <FormControl id="input-form" margin="normal">
                     <InputLabel id="alert-type-select-label">Alert Type</InputLabel>
                     <Select id="alert-type-input" labelId="alert-type-select-label" label="Alert Type" value={alertType} onChange={e => setAlertType(e.target.value)}>
                         {['success', 'info', 'warning', 'error'].map(el => {
-                            return <MenuItem value={el} key={el}>{el}</MenuItem>
+                            return (
+                                <MenuItem value={el} key={el}>
+                                    <Alert severity={el as AlertColor}>
+                                        {el}
+                                    </Alert>
+                                </MenuItem>
+                            )
                         })}
                     </Select>
                     <TextField label="Alert Title(optional)" id="alert-title-input" value={alertTitle} onChange={e => setAlertTitle(e.target.value)} />

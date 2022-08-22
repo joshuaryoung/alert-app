@@ -1,18 +1,19 @@
-import { Alert, AlertTitle, Link, Snackbar } from "@mui/material"
-import React from "react"
+import { Alert, AlertTitle, Link } from "@mui/material"
+import React, { forwardRef } from "react"
+import { AlertType } from "./AlertManager"
 
-function AlertComponent({ alertType, id, alertTitle, timeLimit = 10000, text, link, open, handleClose, index }: any) {
+const AlertComponent = forwardRef<HTMLDivElement, AlertType>(({ alertType, alertTitle, text, link }, ref) => {
     return (
-        <Snackbar open={open} key={id} autoHideDuration={timeLimit} anchorOrigin={{horizontal: 'right', vertical: 'top'}} onClose={el => handleClose(index)}>
+        <div ref={ref}>
             <Alert severity={alertType} >
                 {alertTitle && <AlertTitle>{alertTitle}</AlertTitle>}
-                {link && <Link href={link} target="_blank">
+                {link && <Link href={link} target="_blank"> 
                     {text}
                 </Link>}
                 {!link && text}
             </Alert>
-        </Snackbar>
+        </div>
     )
-}
+})
 
 export default AlertComponent
